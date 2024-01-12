@@ -1,40 +1,29 @@
-/*const { expect } = require("chai");
+const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("PackedVariablesExample Contract", function () {
+describe("PackedVariablesExample", function () {
     let packedVariablesExample;
 
     beforeEach(async function () {
         const PackedVariablesExample = await ethers.getContractFactory("PackedVariablesExample");
-        packedVariablesExample = await PackedVariablesExample.deploy(1, 1, 2);
+        packedVariablesExample = await PackedVariablesExample.deploy(42, 24, 1000);
     });
 
-    it("should pack small variables into the same storage slot", async function () {
-        // Retrieve the storage slot values
-        const aStorageSlot = await packedVariablesExample.a();
-        const cStorageSlot = await packedVariablesExample.c();
-        const bStorageSlot = await packedVariablesExample.b();
+    it("should demonstrate variable packing", async function () {
+        // Measure gas consumption for getting values individually
+        const gasGetA = await packedVariablesExample.a.estimateGas();
+        const gasGetC = await packedVariablesExample.c.estimateGas();
+        const gasGetB = await packedVariablesExample.b.estimateGas();
 
-        console.log("Storage Slot Values - a:", aStorageSlot.toString());
-        console.log("Storage Slot Values - c:", cStorageSlot.toString());
-        console.log("Storage Slot Values - b:", bStorageSlot.toString());
+        // Measure gas consumption for getting all values at once
+        const gasGetAll = await packedVariablesExample.a.c.b.estimateGas();
 
-        // Check if a and c are in the same storage slot
-        expect(aStorageSlot).to.equal(cStorageSlot);
-    });
+        console.log("Gas used (getA):", gasGetA);
+        console.log("Gas used (getC):", gasGetC);
+        console.log("Gas used (getB):", gasGetB);
+        console.log("Gas used (getAll):", gasGetAll);
 
-    it("should have sequential storage positions for small variables", async function () {
-        // Retrieve the storage position values
-        const aStoragePosition = await ethers.provider.getStorageAt(packedVariablesExample.address, 0);
-        const cStoragePosition = await ethers.provider.getStorageAt(packedVariablesExample.address, 1);
-        const bStoragePosition = await ethers.provider.getStorageAt(packedVariablesExample.address, 2);
-
-        console.log("Storage Position Values - a:", ethers.BigNumber.from(aStoragePosition).toString());
-        console.log("Storage Position Values - c:", ethers.BigNumber.from(cStoragePosition).toString());
-        console.log("Storage Position Values - b:", ethers.BigNumber.from(bStoragePosition).toString());
-
-        // Check if a and c have sequential storage positions
-        expect(ethers.BigNumber.from(cStoragePosition)).to.equal(ethers.BigNumber.from(aStoragePosition).add(1));
+        // Assert that gas consumption for getting all values is less than the sum of individual gas consumptions
+        expect(gasGetAll).to.be.lt(gasGetA + gasGetC + gasGetB);
     });
 });
-*/
