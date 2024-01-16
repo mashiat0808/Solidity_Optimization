@@ -10,8 +10,8 @@ describe("VariableOptimization Contract", function () {
     });
 
     it("should test gas cost for fixed size variable", async function () {
-        const value = ether.utils.formatBytes32String("Hello");
-        const transaction = await variableOptimization.setFixedSizeString(value);
+        
+        const transaction = await variableOptimization.setFixedSizeString();
         const receipt = await transaction.wait();
         const gasUsed = receipt.gasUsed;
 

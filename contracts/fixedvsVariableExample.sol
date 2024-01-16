@@ -29,12 +29,12 @@ contract VariableOptimization {
    string public dynamicString;
 
    // Set fixed-size string
-   function setFixedSizeString(bytes32 _value) external {
-       fixedSizeString = _value;
+   function setFixedSizeString() public {
+       bytes32 bytes32Text = bytes32(".....");
    }
 
    // Set dynamic string
-   function setDynamicString(string memory _value) external {
+   function setDynamicString(string memory _value) public  {
        dynamicString = _value;
    }
 }

@@ -1,14 +1,18 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
+// Specify the packing alignment for the entire contract
 
 contract PackedVariablesExample {
-    uint128 public a;
-    uint128 public c;
-    uint256 public b;
+    struct PackedStruct {
+        uint128 a;
+        uint128 c;
+        uint256 b;
+        uint128 d;
+    }
 
-    constructor(uint128 _a, uint128 _c, uint256 _b) {
-        a = _a;
-        c = _c;
-        b = _b;
+    PackedStruct public packedData;
+
+    constructor(uint128 _a, uint128 _c, uint256 _b, uint128 _d) {
+        packedData = PackedStruct(_a, _c, _b, _d);
     }
 }

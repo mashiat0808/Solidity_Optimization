@@ -6,7 +6,7 @@ describe("PackedVariablesExample", function () {
 
     beforeEach(async function () {
         const PackedVariablesExample = await ethers.getContractFactory("PackedVariablesExample");
-        packedVariablesExample = await PackedVariablesExample.deploy(42, 24, 1000);
+        packedVariablesExample = await PackedVariablesExample.deploy(42, 24, 1000, 56);
     });
 
     it("should demonstrate variable packing", async function () {
